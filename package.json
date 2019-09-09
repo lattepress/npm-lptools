@@ -1,12 +1,12 @@
 {
-  "name": "reports",
+  "name": "lptools",
   "version": "1.0.0",
   "description": "A reports tool.",
-  "main": "lattepress-report.js",
+  "main": "lptools.js",
   "bin": {
-    "lattepress-report": "./lattepress-report.js"
+    "lptools": "./lptools.js"
   },
-  "repository": "",
+  "repository": "https://github.com/rahularyan/lattepress-report/",
   "author": "Rahul Arya <rah12@live.com>",
   "license": "MIT",
   "dependencies": {
@@ -30,9 +30,9 @@
     "prettier": "1.18.2"
   },
   "scripts": {
-    "package:mac": "pkg lattepress-report.js --targets node10-macos-x64 --output dist/mac/lattepress-report",
-    "package:win": "pkg lattepress-report.js --targets node10-win-x64 --output dist/win/lattepress-report.exe",
-    "package:linux": "pkg lattepress-report.js --targets node10-linux-x64 --output dist/linux/lattepress-report",
+    "package:mac": "pkg lptools.js --targets node10-macos-x64 --output dist/mac/lptools",
+    "package:win": "pkg lptools.js --targets node10-win-x64 --output dist/win/lptools.exe",
+    "package:linux": "pkg lptools.js --targets node10-linux-x64 --output dist/linux/lptools",
     "package:all": "yarn package:mac && yarn package:win && yarn package:linux"
   }
 }

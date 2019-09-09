@@ -9,9 +9,7 @@ module.exports = () => {
         `TeamWork email is not defined in config, you can add config by using below command:`,
       ),
     )
-    console.log(
-      chalk.green(`lattepress-report set email YourTeamWorkEmail@domain.com`),
-    )
+    console.log(chalk.green(`lptools set email YourTeamWorkEmail@domain.com`))
     return false
   }
 
@@ -21,7 +19,7 @@ module.exports = () => {
         `TeamWork password is not defined in config, you can add config by using below command:`,
       ),
     )
-    console.log(chalk.green(`lattepress-report set password YourPassword`))
+    console.log(chalk.green(`lptools set password YourPassword`))
     return false
   }
 
@@ -31,9 +29,7 @@ module.exports = () => {
         `Github username is not defined in config, you can add config by using below command:`,
       ),
     )
-    console.log(
-      chalk.green(`lattepress-report set github_username YourGitHubUserName`),
-    )
+    console.log(chalk.green(`lptools set github_username YourGitHubUserName`))
     return false
   }
 
@@ -44,9 +40,7 @@ module.exports = () => {
       ),
     )
     // Can be generated from here: https://github.com/settings/tokens
-    console.log(
-      chalk.green(`lattepress-report set github_token YourGitHubToken`),
-    )
+    console.log(chalk.green(`lptools set github_token YourGitHubToken`))
     return false
   }
 }
