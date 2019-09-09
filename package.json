@@ -1,5 +1,5 @@
 {
-  "name": "lptools",
+  "name": "@lattepress/lptools",
   "version": "1.0.0",
   "description": "A reports tool.",
   "main": "lptools.js",
