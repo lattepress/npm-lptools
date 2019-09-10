@@ -2,6 +2,9 @@
 // index.js
 
 process.env['SUPPRESS_NO_CONFIG_WARNING'] = true
+
+global.__basePath = __dirname
+
 /**
  * This is the common way to import a package in NodeJS.
  * The CommonJS module system is used.

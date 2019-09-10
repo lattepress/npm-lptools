@@ -33,7 +33,7 @@ Install this tool globally for easier access:
 After installation all required config must be set and you can use this command
 to set config:
 
-`lptools set email rah12@live.com`
+`lptools set email yourTWemail@domain.com`
 
 required config to run this tool are:
 
