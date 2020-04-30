@@ -44,6 +44,7 @@ mycli
 mycli
   .command('set')
   .arguments('<key> <value>')
+  .option('-r, --repos', 'Repository name')
   .description('Set configuration options')
   .action(setAction)
 
