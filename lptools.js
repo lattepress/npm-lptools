@@ -38,6 +38,12 @@ mycli
 mycli
   .command('build')
   .arguments('[date]')
+  .option(
+    '-m, --message [message]',
+    `Shall we post it to teamwork message`,
+    /^(yes|no)$/i,
+    'no',
+  )
   .description('build today report')
   .action(buildAction)
 

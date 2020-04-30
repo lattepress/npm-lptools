@@ -64,3 +64,4 @@ typings/
 dist
 /config.json
 /config/local.json
+/config/local-bk.json
