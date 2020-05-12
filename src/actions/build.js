@@ -5,7 +5,9 @@ var table = require('json-to-markdown-table')
 const util = require('util')
 const fs = require('fs')
 const chalk = require('chalk')
-const md = require('markdown-it')()
+const md = require('markdown-it')({
+  html: true,
+})
 const readFile = util.promisify(fs.readFile)
 
 const configCheck = require('../helpers/configCheck')
@@ -19,7 +21,10 @@ const buildReport = async (logs, reportDate) => {
   logs.forEach((x, i) => {
     let merged = false
     if ('' === x.description) {
-      let existing = mapped.findIndex(coll => coll.task === x.description)
+      let existing = mapped.findIndex(coll => {
+        return coll.task === x.description
+      })
+
       if (-1 !== existing) {
         mapped[existing].hours = x.hours
         mapped[existing].minutes = x.minutes
@@ -42,7 +47,14 @@ const buildReport = async (logs, reportDate) => {
         hours: x.hours,
         minutes: x.minutes,
         completed: x.completed,
-        tags: x['task-tags'].map(tag => tag.name),
+        tags: x['task-tags'].map(
+          tag =>
+            '<span class="w-tags__tag" style="background:' +
+            tag.color +
+            '">' +
+            tag.name +
+            '</span>',
+        ),
         time: `${x.hours > 0 ? x.hours + 'h:' : '0h:'}${x.minutes}m`,
       })
     }
@@ -132,7 +144,10 @@ const writeProjectReport = async (reportDate, dirName, project, logs) => {
 **COMMITS (${commits.length})**\n`
     let commitIndex = 1
     commits.forEach(x => {
-      if (!x.commit.message.includes('Merge pull request')) {
+      if (
+        !x.commit.message.includes('Merge pull request') &&
+        !x.commit.message.includes('Merged branch')
+      ) {
         commitsText += `\n${commitIndex}. [${x.commit.message.replace(
           /(\r\n|\n|\r)/gm,
           '',
@@ -183,7 +198,8 @@ const postToTeamWork = async (project, body) => {
     {
       messageReply: {
         body: md.render(body),
-        notify: [247059],
+        notify: '247059,234104',
+        'notify-current-user': true,
       },
     },
     {
@@ -194,7 +210,9 @@ const postToTeamWork = async (project, body) => {
     },
   )
 
-  console.log(data)
+  console.log(
+    `https://projects.growthlabs.agency/#/messages/${messageId}?pmp=${data.id}`,
+  )
 }
 
 const getCommits = async (reportDate, project) => {
