@@ -16,6 +16,10 @@ const writeFile = util.promisify(fs.writeFile)
 
 let config = JSON.parse(fs.readFileSync(configFile, 'utf8'))
 let sendMessage = false
+
+const teamwork_url = config.teamwork_url
+const github_org = config.github_org
+
 const buildReport = async (logs, reportDate) => {
   let mapped = []
   logs.forEach((x, i) => {
@@ -43,7 +47,7 @@ const buildReport = async (logs, reportDate) => {
         id: x['todo-item-id'],
         projectName: x['project-name'],
         task: taskName,
-        url: `https://projects.growthlabs.agency/#/tasks/${x['todo-item-id']}`,
+        url: `https://${teamwork_url}/#/tasks/${x['todo-item-id']}`,
         hours: x.hours,
         minutes: x.minutes,
         completed: x.completed,
@@ -194,7 +198,7 @@ const postToTeamWork = async (project, body) => {
   let messageId = config.projects[project].messageId
 
   const {data} = await axios.post(
-    `https://projects.growthlabs.agency/messages/${messageId}/messageReplies.json`,
+    `https://${teamwork_url}/messages/${messageId}/messageReplies.json`,
     {
       messageReply: {
         body: md.render(body),
@@ -210,9 +214,7 @@ const postToTeamWork = async (project, body) => {
     },
   )
 
-  console.log(
-    `https://projects.growthlabs.agency/#/messages/${messageId}?pmp=${data.id}`,
-  )
+  console.log(`https://${teamwork_url}/#/messages/${messageId}?pmp=${data.id}`)
 }
 
 const getCommits = async (reportDate, project) => {
@@ -239,7 +241,7 @@ const getCommits = async (reportDate, project) => {
   for (const repo of projectInfo.repos) {
     try {
       const {data} = await axios.get(
-        `https://api.github.com/repos/lattepress/${repo}/commits`,
+        `https://api.github.com/repos/${github_org}/${repo}/commits`,
         {
           params,
           auth: {
@@ -277,7 +279,7 @@ module.exports = async (date = false, cmd) => {
   console.log(chalk.bgGreen(`\n\n\n   Generating report for : ${date}   `))
   try {
     const growthLabsData = await axios.get(
-      'https://projects.growthlabs.agency/time_entries.json',
+      `https://${teamwork_url}/time_entries.json`,
       {
         params: {
           fromdate: date,
